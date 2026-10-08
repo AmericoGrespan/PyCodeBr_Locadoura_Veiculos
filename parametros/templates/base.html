@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0096c7;
+      color: #fff;
+    }
+
+    footer {
+      background-color: #ccc;
+      color: #333;
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    nav {
+      background-color: #0096c7;
+      color: #fff;
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .user-info {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+      position: relative;
+    }
+
+    nav ul li a,
+    nav ul li button.btn-logout {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      display: block;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    nav ul li a:hover,
+    nav ul li button.btn-logout:hover {
+      background-color: #32bbe8;
+    }
+
+    /* Estilização do Menu Suspenso (Dropdown) */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #0096c7;
+      min-width: 160px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .dropdown-menu li {
+      margin: 0;
+      width: 100%;
+    }
+
+    .dropdown-menu li a {
+      padding: 10px 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <!-- Exibe o nome do usuário conectado à esquerda -->
+      <div class="user-info">
+        {% if user.is_authenticated %}
+        Olá, {{ user.username }}
+        {% else %}
+        Visitante
+        {% endif %}
+      </div>
+
+      <!-- Itens do Menu à direita -->
+      <ul>
+        <li><a href="{% url 'cars_list' %}">Consulta</a></li>
+
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'new_car' %}">Adiciona</a></li>
+        <li>
+          <a href="javascript:void(0)" onclick="toggleDropdown(event)">Cadastros &#9662;</a>
+          <ul id="menuCadastros" class="dropdown-menu">
+            <li><a href="{% url 'ciclo_vida' %}">Ciclo de Vida</a></li>
+            <li><a href="{% url 'perfil_cliente' %}">Perfil Cliente</a></li>
+            <li><a href="{% url 'categoria_origem' %}">Categoria Origem</a></li>
+          </ul>
+        </li>
+
+        <!-- Form de Logout Seguro usando POST exigido pelas novas versões do Django -->
+        <li>
+          <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">Sair</button>
+          </form>
+        </li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'register' %}">Registra-se</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2026 PycodeBR Multimarcas</p>
+  </footer>
+
+  <!-- SCRIPT PARA CONTROLAR O DROPDOWN -->
+  <script>
+    function toggleDropdown(event) {
+      event.stopPropagation();
+      var menu = document.getElementById("menuCadastros");
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+      } else {
+        menu.style.display = "block";
+      }
+    }
+
+    window.onclick = function (event) {
+      var menu = document.getElementById("menuCadastros");
+      if (menu && menu.style.display === "block") {
+        menu.style.display = "none";
+      }
+    }
+  </script>
+</body>
+
+</html>

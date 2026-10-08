@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-central" style="padding: 20px;">
+    <h2>Cadastro de Perfis de Clientes</h2>
+    
+    <!-- Barra de Busca e botão Novo -->
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <form method="GET" action="{% url 'list_perfil_cliente' %}" style="display: flex; gap: 10px;">
+            <input type="text" name="search" placeholder="Buscar perfil..." value="{{ request.GET.search }}" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+            <button type="submit" class="btn" style="background-color: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Buscar</button>
+        </form>
+        <a href="{% url 'inc_perfil_cliente' %}" class="btn" style="background-color: #28a745; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none;">+ Novo Perfil</a>
+    </div>
+
+    <!-- Tabela de Dados -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; text-align: left;">
+                <th style="padding: 12px;">Perfil</th>
+                <th style="padding: 12px;">Descrição</th>
+                <th style="padding: 12px; text-align: center;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for perfil in perfis %}
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;">{{ perfil.perfil_cliente }}</td>
+                <td style="padding: 12px;">{{ perfil.descricao }}</td>
+                <td style="padding: 12px; text-align: center;">
+                    <a href="{% url 'edit_perfil_cliente' perfil.id %}" style="color: #ffc107; text-decoration: none; margin-right: 15px;">Editar</a>
+                    <a href="{% url 'delete_perfil_cliente' perfil.id %}" style="color: #dc3545; text-decoration: none;">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="padding: 12px; text-align: center; color: #777;">Nenhum perfil encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

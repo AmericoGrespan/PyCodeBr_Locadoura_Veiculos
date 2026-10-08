@@ -1,0 +1,130 @@
+HTML
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>{% block title %}{% endblock %}</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f4f6f9;
+            overflow: hidden;
+        }
+
+        /* Menu Lateral Esquerdo */
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: #0f172a;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .menu-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #64748b;
+            padding: 10px 25px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 25px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #334155;
+            color: #ffffff;
+            padding-left: 30px;
+        }
+
+        /* Área de Conteúdo Principal */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        /* Ajustes finos para centralizar formulários herdados se necessário */
+        .container-central {
+            height: auto !important;
+            min-height: 80vh;
+            background: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Lateral -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            Revenda Carros
+        </div>
+        <nav class="sidebar-menu">
+            
+            <!-- Grupo 1: Veículos -->
+            <div class="menu-category">Gestão de Veículos</div>
+            <ul>
+                <li><a href="{% url 'new_car' %}">➕ Incluir Veículo</a></li>
+                <!-- Ajuste o nome da URL abaixo de acordo com seu urls.py se for 'cars_list' ou 'list_car' -->
+                <li><a href="{% url 'cars_list' %}">🚗 Listar Veículos</a></li>
+            </ul>
+
+            <!-- Grupo 2: Cadastros de Apoio (Ciclo de Vida) -->
+            <div class="menu-category">Ciclo de Vida & Métricas</div>
+            <ul>
+                <li><a href="{% url 'ciclo_vida_veiculo' %}">🔄 Ciclo de Vida</a></li>
+                <li><a href="% url 'perfil_client' %">👤 Perfil de Cliente e Uso</a></li>
+                <li><a href="#">🏷️ Categoria e Origem</a></li>
+                <li><a href="#">🏭 Diferentes Fabricantes</a></li>
+            </ul>
+
+        </nav>
+    </aside>
+
+    <!-- Conteúdo Principal Dinâmico -->
+    <main class="main-content">
+        {% block content %}
+        <!-- O conteúdo das outras páginas (listagem, formulários) renderizará aqui -->
+        {% endblock %}
+    </main>
+
+</body>
+</html>

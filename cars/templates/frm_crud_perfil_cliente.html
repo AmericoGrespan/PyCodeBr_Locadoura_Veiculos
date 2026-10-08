@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-central">
+     <!-- O action vazio indica que o form vai disparar para a mesma URL que carregou a página (seja ela editar ou incluir) -->
+     <form class="meu-formulario" method="POST" enctype="multipart/form-data">
+        <h4><strong>{{ titulo }}</strong></h4> 
+        {% csrf_token %}
+        
+        <div class="forms-grup"> 
+             {{ inc_perfil_cliente.perfil_cliente.errors }}
+             <label>Perfil Cliente</label>
+             {{ inc_perfil_cliente.perfil_cliente }}
+        </div>    
+        <br/>
+        <div class="forms-grup"> 
+             {{ inc_perfil_cliente.descricao.errors }}
+             <label>Descrição</label>
+             {{ inc_perfil_cliente.descricao }}
+        </div>
+        <br/>    
+        <div class="grupo-botoes">
+            <!-- O botão assume "Salvar" ou "Incluir" dependendo do contexto -->
+            <button type="submit" class="btn btn-salvar" style="padding: 6px 12px; border-radius: 4px;">Salvar</button>
+            <a href="{% url 'list_perfil_cliente' %}" class="btn btn-fechar" style="padding: 6px 12px; border-radius: 4px; text-align: center; text-decoration: none; display: inline-block;">Fechar</a>
+        </div>
+     </form>
+</div>
+{% endblock %}

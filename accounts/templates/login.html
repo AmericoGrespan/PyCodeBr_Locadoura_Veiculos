@@ -1,0 +1,102 @@
+{{% extends 'base.html' %}
+
+{% block title %}Acessar - PycodeBR{% endblock %}
+
+{% block content %}
+<style> 
+    .container-central {
+        display: flex;
+        justify-content: center; 
+        align-items: center;    
+        min-height: 80vh;       
+        background-color: #f4f4f4; 
+        padding: 20px;
+    }
+
+    .meu-formulario {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        width: 100%;
+        max-width: 400px; 
+    }
+
+    .meu-formulario h4 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+
+    fieldset {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    table td {
+        padding: 8px 4px;
+        vertical-align: middle;
+    }
+
+    table label {
+        font-weight: bold;
+        color: #555;
+    }
+
+    table input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .btn-enviar {
+        width: 100%;
+        background-color: #0096c7; 
+        color: white;
+        padding: 10px;
+        border-radius: 4px; 
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-enviar:hover { 
+        background-color: #108eb8; 
+    }
+
+    .errorlist {
+        color: #dc3545;
+        list-style: none;
+        padding: 0;
+        margin: 5px 0;
+        font-size: 12px;
+    }
+</style>
+
+<div class="container-central">
+    <form class="meu-formulario" method="POST">
+        <h4><strong>PycodeBR - Login</strong></h4>
+        
+        <fieldset>
+            {% csrf_token %}
+            <table> 
+                {{ login_form.as_table }}    
+            </table>
+            
+            <button type="submit" class="btn-enviar">Acessar</button> 
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

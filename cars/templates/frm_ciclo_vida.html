@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<Doctype html> 
+<html lang="pt-br"> 
+<read>
+</read>
+<style> 
+* Faz o container ocupar toda a altura da tela visível */
+ html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.container-central {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;    /* Centraliza verticalmente */
+    height: 100vh;          /* 100% da altura da Viewport (tela) */
+    background-color: #f4f4f4; /* Opcional: cor de fundo para destaque */
+}
+/* Estiliza o formulário em si */
+
+.meu-formulario {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+    width: 100%;
+    max-width: 400px; /* Largura máxima do formulário */
+}
+/* Cor de destaque para o botão de envio */
+.btn-enviar {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Cor neutra para o botão de fechar */
+.btn-fechar {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Efeito de hover (opcional) */
+.btn-enviar:hover { background-color: #0056b3; }
+.btn-fechar:hover { background-color: #5a6268; }
+
+
+
+</style>
+<body>
+
+<div class="container-central">
+     <form class="meu-formulario" method="POST" enctype="multipart/form-data">
+     <h4><strong> Ciclo de Vida </strong>  </h4>
+        {% csrf_token %}
+    <div class="forms-grup"> 
+         {{inc_ciclo_vida.ciclo_vida.error}}
+         <label> Ciclo de Vida </label>
+         {{ inc_ciclo_vida.ciclo_vida}}
+    </div>    
+   <br/>    
+    <div class="forms-grup"> 
+        {{ inc_ciclo_vida.descricao.error}}
+         <label> Descricao</label>
+         {{ inc_ciclo_vida.descricao}}
+    </div>
+    <br/>    
+    <div class="forms-grup"> 
+    <input type="submit" value="Cadastrar"> 
+    <input type="submit" value="Fechar"> 
+    
+           
+    </div>    
+    
+
+
+</div>
+{% endblock %}
+
+

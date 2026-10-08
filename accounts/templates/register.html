@@ -1,0 +1,112 @@
+{{% extends 'base.html' %}
+
+{% block title %}Cadastro de Usuário - PycodeBR{% endblock %}
+
+{% block content %}
+<style> 
+    .container-central {
+        display: flex;
+        justify-content: center; 
+        align-items: center;    
+        min-height: 80vh;       
+        background-color: #f4f4f4; 
+        padding: 20px;
+    }
+
+    .meu-formulario {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        width: 100%;
+        max-width: 400px; 
+    }
+
+    .meu-formulario h4 {
+        margin-top: 0;
+        margin-bottom: 25px;
+        color: #333;
+        text-align: center;
+    }
+
+    .forms-grup {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .forms-grup label {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    /* Aplica o estilo padrão do projeto nos inputs manuais */
+    .forms-grup input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .btn-enviar {
+        width: 100%;
+        background-color: #0096c7; 
+        color: white;
+        padding: 10px;
+        border-radius: 4px; 
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-enviar:hover { 
+        background-color: #108eb8; 
+    }
+
+    /* Estilo para exibição de erros individuais dos campos */
+    .error-msg {
+        color: #dc3545;
+        font-size: 12px;
+        margin-bottom: 4px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container-central">
+    <form class="meu-formulario" method="POST">
+        <h4><strong>PycodeBR - Registro</strong></h4>
+        {% csrf_token %}
+        
+        <div class="forms-grup"> 
+            {% if user_form.username.errors %}
+                <div class="error-msg">{{ user_form.username.errors }}</div>
+            {% endif %}
+            <label>Usuário</label>
+            {{ user_form.username }}
+        </div>    
+
+        <div class="forms-grup"> 
+            {% if user_form.password1.errors %}
+                <div class="error-msg">{{ user_form.password1.errors }}</div>
+            {% endif %}
+            <label>Senha</label>
+            {{ user_form.password1 }}
+        </div>
+
+        <div class="forms-grup"> 
+            <label>Confirme a Senha</label>
+            {{ user_form.password2 }}
+        </div>
+
+        <div class="forms-grup"> 
+            <button type="submit" class="btn-enviar">Cadastrar</button> 
+        </div>    
+    </form>
+</div>
+{% endblock %}
